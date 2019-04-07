@@ -19,10 +19,6 @@ X = np.stack((x0,x1),axis=1)
 
 y = np.dot(X,B) + u
 
-dat = np.loadtxt('data.txt',delimiter=',',dtype='float64')
-
-y = dat[:,0]
-X = dat[:,1:3]
 startv = np.array([1,1,0])
 
 # Construct LLF
@@ -37,3 +33,5 @@ llf(startv)
 bfgs.gr(llf,startv)
 
 res = bfgs.bfgsmin(llf,startv)
+
+bfgs.bprint(res)

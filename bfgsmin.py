@@ -1,6 +1,8 @@
 # Load packages
 import numpy as np
 import scipy.stats as st
+import sys
+import json
 
 # Numerical gradient function
 def gr(f,param,eps=1e-07):
@@ -31,14 +33,13 @@ def bfgsmin(f,x0,maxiter=1000,tol=np.sqrt(np.finfo(float).eps),verbose=False,hes
  
  # Start algorithm
  for iter in range(maxiter):
-  newvect = {'iter': iter, 'f_val': f_val, 'gdiff': g_diff, 'step': lambd}
-  print(newvect)
+  print('Optimizing / Iter No. ' + str(int(iter)) + ' / F-Value: ' + str(round(f_val,2)) + ' / Step size: ' + str(round(lambd,6)) + ' / Diff: ' + str(round(g_diff,6)))
   lambd = 1
   
   # Check if some stopping criterion is satisfied
   if g_diff <= (1+np.abs(f_old))*tol*tol:
    convergence = 0
-   print('Optimization complete!')
+   print('\nOptimization complete!')
    break
   
   # Construct direction vector
@@ -76,4 +77,14 @@ def bfgsmin(f,x0,maxiter=1000,tol=np.sqrt(np.finfo(float).eps),verbose=False,hes
  h_final = H0
  
  return({'convergence': convergence, 'iterations': iter, 'max_f': f_val, 'par_max': x, 'hessian': h_final})
+ 
+# Print pretty tables
+def bprint(object):
+ for k,v in object.items():
+  print('')
+  print(k+':')
+  print(v)
+  print('')
+ 
+
  
